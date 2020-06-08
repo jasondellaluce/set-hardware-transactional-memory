@@ -9,9 +9,12 @@ This repository contains various implementations of a set data structure. The go
 - **add**: Inserts an element in the collection, if not already present
 - **remove**: Removes an element from the collection, if already present
 - **contains**: Asserts whether an element is present in the collection or not
+
 The data structure have been implemented as an ordered linked list. Multiple concurrency solutions have been developed for comparison:
 - Coarse-grain locking, with a unique shared lock for each operation of the collection
 - Lock-free with lazy removing strategy based on markable atomic variables
 - Hybrid Transactional Memory using g++ proposed standard libITM
 - Hardware Transactional Memory using Intel's RTM low-level operators
+
 Each HTM approach have been implemented in with coarse granularity, namely creating a transaction for each entire operation of the data structure. This has been done in order to easily compare their performance with classical coarse-grain locking.
+
