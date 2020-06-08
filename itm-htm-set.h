@@ -4,19 +4,19 @@
 #include <atomic>
 #include <mutex> 
 #include "set.h"
-#include "unsafe-set.h"
+#include "sequential-set.h"
 
 class ItmHtmSet : public Set {
 	public:
 		ItmHtmSet() : Set() {
-			tail = new UnsafeSetNode(-1 & ~(1 << (sizeof(int) * 8 - 1)), NULL);
-			head = new UnsafeSetNode(-1, tail);
+			tail = new SequentialSetNode(-1 & ~(1 << (sizeof(int) * 8 - 1)), NULL);
+			head = new SequentialSetNode(-1, tail);
 		}
 		
 		~ItmHtmSet() {
-			UnsafeSetNode* cur = head;
+			SequentialSetNode* cur = head;
 			while(cur != NULL) {
-				UnsafeSetNode* temp = cur->next;
+				SequentialSetNode* temp = cur->next;
 				delete cur;
 				cur = temp;			
 			}
@@ -24,13 +24,13 @@ class ItmHtmSet : public Set {
 	
 		bool add(int item) {
 			atomic_noexcept {
-				UnsafeSetNode* cur = head->next;
-				UnsafeSetNode* pred = head;
+				SequentialSetNode* cur = head->next;
+				SequentialSetNode* pred = head;
 				while(cur != NULL) {
 					if(item < cur->item) {
 						if(pred->item == item)
 							return false;
-						UnsafeSetNode* node = new UnsafeSetNode(item, cur);
+						SequentialSetNode* node = new SequentialSetNode(item, cur);
 						pred->next = node;
 						return true;
 					}
@@ -43,8 +43,8 @@ class ItmHtmSet : public Set {
 		
 		bool remove(int item) {
 			atomic_noexcept {
-				UnsafeSetNode* cur = head->next;
-				UnsafeSetNode* pred = head;
+				SequentialSetNode* cur = head->next;
+				SequentialSetNode* pred = head;
 				while(cur != tail) {
 					if(item == cur->item) {
 						pred->next = cur->next;
@@ -60,7 +60,7 @@ class ItmHtmSet : public Set {
 		
 		bool contains(int item) {
 			atomic_noexcept {
-				UnsafeSetNode* cur = head->next;
+				SequentialSetNode* cur = head->next;
 				while(cur != tail) {
 					if(cur->item == item) {
 						return true;
@@ -76,8 +76,8 @@ class ItmHtmSet : public Set {
 		}
 	
 	private:
-		UnsafeSetNode* head;
-		UnsafeSetNode* tail;
+		SequentialSetNode* head;
+		SequentialSetNode* tail;
 };
 
 

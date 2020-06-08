@@ -3,13 +3,13 @@
 
 #include <atomic>
 #include "set.h"
-#include "unsafe-set.h"
+#include "sequential-set.h"
 #include "querylock.h"
 
 class CoarseLockSet : public Set {
 	public:
 		CoarseLockSet() : Set() {
-			set = new UnsafeSet();
+			set = new SequentialSet();
 			lock = new QueryLock();
 		}
 		
@@ -47,7 +47,7 @@ class CoarseLockSet : public Set {
 		}
 	
 	private:
-		UnsafeSet* set;
+		SequentialSet* set;
 		QueryLock* lock;
 };
 

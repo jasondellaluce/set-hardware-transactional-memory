@@ -1,44 +1,44 @@
-#ifndef UNSAFESET_H
-#define UNSAFESET_H
+#ifndef SEQUENTIALSET_H
+#define SEQUENTIALSET_H
 
 #include <atomic>
 #include "set.h"
 
-class UnsafeSetNode {
+class SequentialSetNode {
 	public:
-		UnsafeSetNode* next;
+		SequentialSetNode* next;
 		int item;
 		
-		UnsafeSetNode(int item, UnsafeSetNode* next) {
+		SequentialSetNode(int item, SequentialSetNode* next) {
 			this->item = item;
 			this->next = next;
 		}
 };
 
-class UnsafeSet : public Set {
+class SequentialSet : public Set {
 	public:
-		UnsafeSet() : Set() {
-			tail = new UnsafeSetNode(-1 & ~(1 << (sizeof(int) * 8 - 1)), NULL);
-			head = new UnsafeSetNode(-1, tail);
+		SequentialSet() : Set() {
+			tail = new SequentialSetNode(-1 & ~(1 << (sizeof(int) * 8 - 1)), NULL);
+			head = new SequentialSetNode(-1, tail);
 		}
 		
-		~UnsafeSet() {
-			UnsafeSetNode* cur = head;
+		~SequentialSet() {
+			SequentialSetNode* cur = head;
 			while(cur != NULL) {
-				UnsafeSetNode* temp = cur->next;
+				SequentialSetNode* temp = cur->next;
 				delete cur;
 				cur = temp;			
 			}
 		}
 	
 		bool add(int item) {
-			UnsafeSetNode* cur = head->next;
-			UnsafeSetNode* pred = head;
+			SequentialSetNode* cur = head->next;
+			SequentialSetNode* pred = head;
 			while(cur != NULL) {
 				if(item < cur->item) {
 					if(pred->item == item)
 						return false;
-					UnsafeSetNode* node = new UnsafeSetNode(item, cur);
+					SequentialSetNode* node = new SequentialSetNode(item, cur);
 					pred->next = node;
 					return true;
 				}
@@ -49,8 +49,8 @@ class UnsafeSet : public Set {
 		}
 		
 		bool remove(int item) {
-			UnsafeSetNode* cur = head->next;
-			UnsafeSetNode* pred = head;
+			SequentialSetNode* cur = head->next;
+			SequentialSetNode* pred = head;
 			while(cur != tail) {
 				if(item == cur->item) {
 					pred->next = cur->next;
@@ -64,7 +64,7 @@ class UnsafeSet : public Set {
 		}
 		
 		bool contains(int item) {
-			UnsafeSetNode* cur = head->next;
+			SequentialSetNode* cur = head->next;
 			while(cur != tail) {
 				if(cur->item == item) {
 					return true;
@@ -75,7 +75,7 @@ class UnsafeSet : public Set {
 		}
 		
 		void print() {
-			UnsafeSetNode* cur = head->next;
+			SequentialSetNode* cur = head->next;
 			while(cur != tail) {
 				std::cout << cur->item << std::endl;
 				cur = cur->next;
@@ -83,8 +83,8 @@ class UnsafeSet : public Set {
 		}
 	
 	private:
-		UnsafeSetNode* head;
-		UnsafeSetNode* tail;
+		SequentialSetNode* head;
+		SequentialSetNode* tail;
 };
 
 
