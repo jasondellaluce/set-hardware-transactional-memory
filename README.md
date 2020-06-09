@@ -1,4 +1,4 @@
-# Set - Hardware Transactional Memory
+# Hardware Transactional Memory applied to a Set data structure
 Research project for graduate class CS295 - Advanced Concurrency (Spring 2020, University of California - Irvine)
 
 ## Introduction
