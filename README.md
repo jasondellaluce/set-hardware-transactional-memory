@@ -1,4 +1,4 @@
-# Set - Hardware Transactional Memory
+# Hardware Transactional Memory applied to a Set data structure
 Research project for graduate class CS295 - Advanced Concurrency (Spring 2020, University of California - Irvine)
 
 ## Introduction
@@ -18,3 +18,11 @@ The data structure have been implemented as an ordered linked list. Multiple con
 
 Each HTM approach have been implemented in with coarse granularity, namely creating a transaction for each entire operation of the data structure. This has been done in order to easily compare their performance with classical coarse-grain locking.
 
+## How to use it
+For the program to be runned on an hardware configuration, the CPU needs to have Intel's TSX support. In order to comiple the executable, execute **make** command in project's folder. Alternatively, the following command can be executed (g++ version 4.8 or higher):
+
+$ g++ -std=c++11 -mrtm -pthread test.cpp -o test.cpp
+
+The bundled benchmark prints a CSV-fromatted output representing the performance comparison of all the supported implementations, measuring the throughput in operations per millisecond. In order to run the benchmark, type the command:
+
+$ python3 benchmark.py
