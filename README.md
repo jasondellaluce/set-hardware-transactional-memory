@@ -21,7 +21,7 @@ Each HTM approach have been implemented in with coarse granularity, namely creat
 ## How to use it
 For the program to be runned on an hardware configuration, the CPU needs to have Intel's TSX support. In order to comiple the executable, execute **make** command in project's folder. Alternatively, the following command can be executed (g++ version 4.8 or higher):
 
-$ g++ -std=c++11 -mrtm -pthread test.cpp -o test.cpp
+$ g++ -std=c++11 -mrtm -pthread test.cpp -o test.o
 
 The bundled benchmark prints a CSV-fromatted output representing the performance comparison of all the supported implementations, measuring the throughput in operations per millisecond. In order to run the benchmark, type the command:
 
